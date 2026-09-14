@@ -23,23 +23,17 @@ app.get('/error', (req, res, next) => {
   next(error);
 });
 
-// Use the unknownEndpoint middleware for handling undefined routes
-app.use(unknownEndpoint);
-
-// Use the errorHandler middleware for handling errors
-app.use(errorHandler);
-
-// Example route that throws an error (for testing purposes only)
-
-
 // Use the tourRouter for all "/tours" routes
 app.use("/api/tours", tourRouter);
 
 // Use the userRouter for all /users routes
 app.use("/api/users", userRouter);
 
+// Use the unknownEndpoint middleware for handling undefined routes
 app.use(unknownEndpoint);
-// app.use(errorHandler);
+
+// Use the errorHandler middleware for handling errors
+app.use(errorHandler);
 
 // Start the server
 app.listen(port, () => {
