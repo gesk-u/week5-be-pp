@@ -9,10 +9,7 @@ const express = require("express");
 const app = express();
 const tourRouter = require("./routes/tourRouter");
 const userRouter = require("./routes/userRouter");
-const { unknownEndpoint } = require("./middleware/customMiddleware");
-
-
-
+const { unknownEndpoint, errorHandler } = require("./middleware/customMiddleware");
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -20,6 +17,19 @@ app.use(morgan("dev"));
 app.get('/', (req, res) => {
   res.send('API is running');
 });
+
+app.get('/error', (req, res, next) => {
+  const error = new Error("Network problem");
+  next(error);
+});
+
+// Use the unknownEndpoint middleware for handling undefined routes
+app.use(unknownEndpoint);
+
+// Use the errorHandler middleware for handling errors
+app.use(errorHandler);
+
+// Example route that throws an error (for testing purposes only)
 
 
 // Use the tourRouter for all "/tours" routes
