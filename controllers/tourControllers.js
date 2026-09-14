@@ -29,7 +29,7 @@ const getTourById = async (req, res) => {
   }
 
   try {
-    const tour = await Tour.findById(carId);
+    const tour = await Tour.findById(tourId);
     if (tour) {
       res.status(200).json(tour);
     } else {
